@@ -1,0 +1,24 @@
+name: "DEV DEPLOYMENT"
+
+on:
+  push:
+    branches:
+      - main
+
+
+permissions:
+  id-token: write
+  contents: read
+
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform.yaml
+    with:
+      environment: "prod"
+      aws-assume-role: "arn:aws:iam::903146277540:role/github-action-Oliver-Data-Engineer"
+      aws-statefile-s3-bucket: "oliver-terraform-state-bucket"
+      aws-lock-dynamodb-table: "goscxat-sa-east-1-terraform-lock"
+      aws-region: "sa-east-1"
+
+
